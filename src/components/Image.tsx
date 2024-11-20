@@ -4,7 +4,7 @@ interface IProps {
   className?: string;
 }
 
-const Image: React.FC<IProps> = ({ imageUrl, alt, className }) => {
+const Image = ({ imageUrl, alt, className }: IProps) => {
   return <img src={imageUrl} alt={alt} className={className} />;
 };
 
