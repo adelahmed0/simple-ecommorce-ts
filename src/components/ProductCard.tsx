@@ -13,7 +13,11 @@ const ProductCard = ({ product }: IProps) => {
 
   return (
     <div className="max-w-sm md:max-w-lg mx-auto md:mx-0 border rounded-md p-2 flex flex-col">
-      <Image imageUrl={imageURL} alt={title} className="rounded-md mb-2" />
+      <Image
+        imageUrl={imageURL}
+        alt={title}
+        className="rounded-md h-full mb-2"
+      />
       <h3>{title}</h3>
       <p>{txtSlicer(description)}</p>
       <div className="flex items-center my-4 space-x-2">
@@ -35,10 +39,10 @@ const ProductCard = ({ product }: IProps) => {
         />
       </div>
       <div className="flex items-center justify-between space-x-2 mt-5">
-        <Button className="bg-indigo-700" onClick={() => console.log('hi')}>
+        <Button className="bg-indigo-500" onClick={() => console.log('hi')}>
           Edit
         </Button>
-        <Button className="bg-red-700">Delete</Button>
+        <Button className="bg-red-500">Delete</Button>
       </div>
     </div>
   );
