@@ -9,11 +9,11 @@ interface IProps {
 }
 
 const ProductCard = ({ product }: IProps) => {
-  const { title, imageURL, description } = product;
+  const { title, imageURL, description, price, category } = product;
 
   return (
-    <div className="border rounded-md p-2 flex flex-col">
-      <Image imageUrl={imageURL} alt="product" className="rounded-md mb-2" />
+    <div className="max-w-sm md:max-w-lg mx-auto md:mx-0 border rounded-md p-2 flex flex-col">
+      <Image imageUrl={imageURL} alt={title} className="rounded-md mb-2" />
       <h3>{title}</h3>
       <p>{txtSlicer(description)}</p>
       <div className="flex items-center my-4 space-x-2">
@@ -27,10 +27,10 @@ const ProductCard = ({ product }: IProps) => {
         <span className="w-5 h-5 bg-pink-500 rounded-full cursor-pointer" />
       </div>
       <div className="flex items-center justify-between">
-        <span>$500,000</span>
+        <span>{price}</span>
         <Image
-          imageUrl="https://images.unsplash.com/photo-1629198688000-71f23e745b6e?q=80&w=580&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="product"
+          imageUrl={category.imageURL}
+          alt={category.name}
           className="w-10 h-10 rounded-full object-center"
         />
       </div>
