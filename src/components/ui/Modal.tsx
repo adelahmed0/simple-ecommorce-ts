@@ -11,7 +11,7 @@ interface IProps {
 const Modal = ({ isOpen, closeModal, title, children }: IProps) => {
   return (
     <div>
-      <div className="fixed inset-0 flex items-center justify-center">
+      <div className="flex items-center justify-center" aria-hidden="true">
         <Dialog
           open={isOpen}
           as="div"
@@ -27,7 +27,7 @@ const Modal = ({ isOpen, closeModal, title, children }: IProps) => {
                 {title && (
                   <DialogTitle
                     as="h3"
-                    className="text-base/7 font-medium text-white"
+                    className=" text-xl font-medium text-gray-600"
                   >
                     {title}
                   </DialogTitle>
