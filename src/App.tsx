@@ -6,6 +6,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import Button from './components/ui/Button.tsx';
 import Input from './components/ui/Input.tsx';
 import { IProduct } from './interfaces/interfaces.ts';
+import { productValidation } from './validation/valiidation.ts';
 
 function App() {
   const defaultProductObj = {
@@ -32,14 +33,20 @@ function App() {
     }));
   };
 
-  const submitHandler = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log(product);
-  };
-
   const onCancel = () => {
     setProduct(defaultProductObj);
     closeModal();
+  };
+
+  const submitHandler = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const errors = productValidation({
+      title: product.title,
+      description: product.description,
+      imageURL: product.imageURL,
+      price: product.price,
+    });
+    console.log(errors);
   };
 
   const renderProductCard = productList.map((product) => {
