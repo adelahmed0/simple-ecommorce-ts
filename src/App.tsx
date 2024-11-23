@@ -2,20 +2,36 @@ import './App.css';
 import ProductCard from './components/ProductCard.tsx';
 import { formInputsList, productList } from './data/data.ts';
 import Modal from './components/ui/Modal.tsx';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Button from './components/ui/Button.tsx';
 import Input from './components/ui/Input.tsx';
+import { IProduct } from './interfaces/interfaces.ts';
 
 function App() {
+  const [product, setProduct] = useState<IProduct>({
+    title: '',
+    description: '',
+    imageURL: '',
+    price: '',
+    colors: [],
+    category: {
+      name: '',
+      imageURL: '',
+    },
+  });
   const [isOpen, setIsOpen] = useState(true);
 
-  function closeModal() {
-    setIsOpen(false);
-  }
+  const closeModal = () => setIsOpen(false);
+  const openModal = () => setIsOpen(true);
 
-  function openModal() {
-    setIsOpen(true);
-  }
+  const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setProduct((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    console.log(product);
+  };
 
   const renderProductCard = productList.map((product) => {
     return <ProductCard key={product.id} product={product} />;
@@ -30,7 +46,13 @@ function App() {
         >
           {formInput.label}
         </label>
-        <Input type="text" id={formInput.id} name={formInput.name} />
+        <Input
+          type="text"
+          id={formInput.id}
+          name={formInput.name}
+          onChange={onChangeHandler}
+          value={product[formInput.name]}
+        />
       </div>
     );
   });
