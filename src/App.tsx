@@ -7,6 +7,7 @@ import Button from './components/ui/Button.tsx';
 import Input from './components/ui/Input.tsx';
 import { IProduct } from './interfaces/interfaces.ts';
 import { productValidation } from './validation/valiidation.ts';
+import ErrorMessage from './components/ErrorMessage.tsx';
 
 function App() {
   const defaultProductObj = {
@@ -21,6 +22,12 @@ function App() {
     },
   };
   const [product, setProduct] = useState<IProduct>(defaultProductObj);
+  const [errors, setErrors] = useState({
+    title: '',
+    description: '',
+    imageURL: '',
+    price: '',
+  });
   const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => setIsOpen(false);
@@ -31,6 +38,11 @@ function App() {
       ...prevState,
       [name]: value,
     }));
+
+    setErrors({
+      ...errors,
+      [name]: '',
+    });
   };
 
   const onCancel = () => {
@@ -40,13 +52,24 @@ function App() {
 
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const { title, description, imageURL, price } = product;
     const errors = productValidation({
-      title: product.title,
-      description: product.description,
-      imageURL: product.imageURL,
-      price: product.price,
+      title,
+      description,
+      imageURL,
+      price,
     });
-    console.log(errors);
+
+    const hasErrorMsg =
+      Object.values(errors).some((value) => value === '') &&
+      Object.values(errors).every((value) => value === '');
+
+    if (!hasErrorMsg) {
+      setErrors(errors);
+      return;
+    }
+
+    console.log('Product submitted', product);
   };
 
   const renderProductCard = productList.map((product) => {
@@ -69,6 +92,7 @@ function App() {
           onChange={onChangeHandler}
           value={product[formInput.name]}
         />
+        <ErrorMessage message={errors[formInput.name]} />
       </div>
     );
   });
