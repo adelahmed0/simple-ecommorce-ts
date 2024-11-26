@@ -9,6 +9,7 @@ import { IProduct } from './interfaces/interfaces.ts';
 import { productValidation } from './validation/valiidation.ts';
 import ErrorMessage from './components/ErrorMessage.tsx';
 import CircleColor from './components/CircleColor.tsx';
+import { v4 as uuid } from 'uuid';
 
 function App() {
   const defaultProductObj = {
@@ -22,6 +23,7 @@ function App() {
       imageURL: '',
     },
   };
+  const [products, setProducts] = useState<IProduct[]>(productList);
   const [product, setProduct] = useState<IProduct>(defaultProductObj);
   const [errors, setErrors] = useState({
     title: '',
@@ -71,10 +73,21 @@ function App() {
       return;
     }
 
-    console.log('Product submitted', product);
+    setProducts((prevState) => [
+      {
+        ...product,
+        id: uuid(),
+        colors: tempColor,
+      },
+      ...prevState,
+    ]);
+
+    setProduct(defaultProductObj);
+    setTempColor([]);
+    closeModal();
   };
 
-  const renderProductCard = productList.map((product) => {
+  const renderProductCard = products.map((product) => {
     return <ProductCard key={product.id} product={product} />;
   });
 
